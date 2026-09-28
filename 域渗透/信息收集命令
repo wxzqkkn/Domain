@@ -1,0 +1,33 @@
+Windows原生工具收集
+whoami /upn //当前用户
+whoami /groups //当前用户所在组
+whoami /priv //当前用户权限
+nltest /dclist: //域控
+net localgroup administrators //本地管理员
+net config workstation //是否加入域
+net group /domain //枚举域内所有组
+net user /domain //枚举域内用户
+net user <users> /domain 查询指定域用户
+net group '"Domain Admin' /domain  //枚举域内指定组成员
+nltest /trusted_domains //枚举域信任关系
+net accounts //查看账户锁定策略
+net view /domain //枚举林中所有域
+klist //查看内存凭证
+cmdkey /list //保存的凭证
+
+原生.net查询
+[System.DirectoryServices.ActiveDirectory.Domain]::GetCurrentDomain() //获取当前域
+[System.DirectoryServices.ActiveDirectory.Forest]::GetCurrentForest() //获取当前林
+
+RSAT-AD-PowerShell模块，手动安装，需要ps5以上
+手动导入：
+安装之后使用everything搜索ActiveDirectory.psd1(分为x64和x86两个版本)，将这个文件所在目录的所有文件拷贝走，然后再搜索Microsoft.ActiveDirectory.Management.dll，也将其拷贝走，打包到没有安装模块的域机器上，导入ActiveDirectory.psd1就能使用了
+Get-ADDomain //获取当前域的信息
+Get-ADForest //获取林信息，域信任关系
+Get-ADDomainController -Filter * //获取所有域控信息
+Get-ADUser -Filter * //获取域内所有用户信息
+Get-ADUser -Identity <user> -Properties * //获取指定用户所有信息
+Get-ADComputer -Filter * -Properties * //获取域内所有机器对象
+Get-ADGroup -Filter * //获取域组
+Get-ADGroupMember "Domain Admins" //查询 domain admins组成员
+Get-ADObject -Filter {msDS-AllowedToDelegateTo -ne $null} -Properties msDS-AllowedToDelegateTo //查找开启了非约束性委派机器
