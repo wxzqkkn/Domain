@@ -9,4 +9,4 @@
 
 [windows访问控制SDDL](https://www.cnblogs.com/suv789/p/18580781)
 
-[域中的ACL访问控制列表](https://www.cnblogs.com/suv789/p/18580781)
+[域中的ACL访问控制列表](https://cloud.tencent.com/developer/article/2384551)
